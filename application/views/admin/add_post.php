@@ -8,13 +8,14 @@
   </div>
 </div>
 <!-- End Page Header -->
-<?= form_open_multipart($action);?>
+<?= ($message && @$message['action'] != NULL) ? form_open_multipart($message['action']) : form_open_multipart($action);?>
   <div class="row">
   	<div class="info-box col-lg-9 col-md-12">
      <!-- Show errors if available -->
       <?php if ($message && $message['message'] != NULL): ?>
         <div class="alert <?= $message['type'] == 'error' ? 'alert-danger' : 'alert-success' ?>">
           <?= $message['message'] ?>
+          <?php if($message && $message['query'] != NULL) $query = $message['query']; ?>
         </div>
       <?php endif ?> 
     </div>
@@ -56,8 +57,10 @@
                 <strong class="mr-1">Status:</strong>
                 <!-- <strong class="text-success">Public</strong> -->
                   <select class="custom-select" name="is_public">
-                    <option value="0" <?= $query ? ($query->is_public == 0 ? 'selected' : '') : ''; ?>>Admin</option>
-                    <option value="1" <?= $query ? ($query->is_public == 1 ? 'selected' : '') : ''; ?>>Public</option>
+                    <option value="0" <?= @$query ? (@$query->is_public == 0 ? 'selected' : '') : ''; ?>>Admin</option>
+                    <?php if($this->auth->is_logged_in_admin()) { ?>
+                    <option value="1" <?= @$query ? (@$query->is_public == 1 ? 'selected' : '') : ''; ?>>Public</option>
+                    <?php } ?>
                   </select>
               </span>
               <span class="d-flex">

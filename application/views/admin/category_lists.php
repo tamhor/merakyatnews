@@ -7,7 +7,7 @@
   </div>
 </div>
 <div class="row">
-	<div class="col-lg-6">
+	<div class="col-lg-12">
 		<form action="categories/create" method="post" class="mb-4">
 			<div class="input-group">
 				<input type="text" class="form-control" name="cat_title" placeholder="Category Name">
@@ -34,7 +34,7 @@
             <?php foreach ($query as $category): ?>
             	<tr>
             		<td><?= $num ?></td>
-            		<td><?= $category->cat_title ?></td>
+            		<td width="75%;"><?= $category->cat_title ?></td>
             		<td>
             			<button class="btn btn-info btn-sm update" data-id="<?= $category->id ?>" data-title="<?= $category->cat_title ?>">
             				<i class="material-icons">edit</i> Edit

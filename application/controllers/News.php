@@ -12,7 +12,8 @@ class News extends Admin_Controller
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('session');
 		if (!$this->auth->is_logged_in_admin()) {
-			redirect('login');
+			if(!$this->auth->is_logged_in_user())
+			    redirect('login');
 		}
 	}
 
@@ -21,7 +22,7 @@ class News extends Admin_Controller
 		$auth = $this->session->userdata('id');
 		// var_dump($auth);die;
 		$this->var['title'] = 'View All Public Posts';
-		if($auth == 1){
+		if($this->auth->is_logged_in_admin()){
 			$this->var['query'] = $this->admin->get_all_posts();
 		}else{
 			$this->var['query'] = $this->db
@@ -29,6 +30,20 @@ class News extends Admin_Controller
             ->where("p.user_id = '$auth' AND p.post_cat_id = c.id AND p.is_delete = 0")
             ->get('posts p, categories c')
             ->result();
+		}
+		$this->var['module'] = 'admin/all_posts';
+		$this->load->view('admin/index', $this->var);
+	}
+	
+	public function users()
+	{
+		$auth = $this->session->userdata('id');
+		// var_dump($auth);die;
+		$this->var['title'] = 'View All Public Posts';
+		if($this->auth->is_logged_in_admin()){
+			$this->var['query'] = $this->admin->get_user_posts();
+		}else{
+		
 		}
 		$this->var['module'] = 'admin/all_posts';
 		$this->load->view('admin/index', $this->var);
@@ -46,7 +61,7 @@ class News extends Admin_Controller
 													$this->admin->get_post_row_obj($id) : ($this->var['message']['type'] == 'error' ? 
 													$this->var['message']['query'] : false); 
 		$this->var['categories'] = $this->admin->get_all_categories();
-		$this->var['action'] = site_url('news/create/save/'.$id);
+		$this->var['action'] = $id && $id > 0 ? site_url('news/create/save/'.$id) : site_url('news/create/save/');
 		$this->load->view('admin/index', $this->var);
 	}
 
@@ -112,6 +127,8 @@ class News extends Admin_Controller
 					$news_data['created_at'] = date('Y-m-d H:i:s');
 					$insert = $this->admin->insert_new_post($news_data);
 					if($insert){
+					    $data['query'] = $this->admin->get_post_row_obj($insert);
+					    $data['action'] = site_url('news/create/save/'.$insert);
 						$data['message'] = 'Berita berhasil ditambahkan';
 						$data['type'] = 'success';
 					}

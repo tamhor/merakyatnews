@@ -7,7 +7,7 @@ class User_login extends Public_Controller
     parent::__construct();
     $this->load->library('auth');
     if ($this->auth->is_logged_in_user()) {
-      redirect(site_url());
+      redirect(site_url().'dashboard');
     }
   }
 

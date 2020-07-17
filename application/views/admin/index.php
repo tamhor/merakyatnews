@@ -72,6 +72,12 @@
                   <i class="material-icons">notes</i>
                   <span>Public Posts</span>
                 </a>
+              </li><?php if($this->auth->is_logged_in_admin()) { ?>
+              <li class="nav-item">
+                <a class="nav-link <?= $this->uri->segment(2) === 'users' ? 'active' : '' ?>" href="<?= base_url('news/users') ?>">
+                  <i class="material-icons">class</i>
+                  <span>User Posts</span>
+                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link <?= $this->uri->segment(1) === 'categories'  ? 'active' : '' ?>" href="<?= base_url('categories') ?>">
@@ -96,7 +102,7 @@
                   <i class="material-icons">info</i>
                   <span>About</span>
                 </a>
-              </li>
+              </li> <?php } ?>
             </ul>
           </div>
         </aside>

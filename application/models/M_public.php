@@ -27,9 +27,43 @@ class M_public extends CI_Model
   {
     return $this->db
             ->select('p.id, p.post_title, p.post_slug, p.post_img, c.cat_title, p.created_at')
-            ->where('p.post_cat_id = c.id AND p.is_delete = 0')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0 AND p.is_public = 1')
             ->order_by('p.created_at', 'DESC')
             ->limit(6)
+            ->get('posts p, categories c')
+            ->result();
+  }
+  
+  
+  
+    public function get_post_cat()
+  {
+    return $this->db
+            ->select('p.id, p.post_title, p.post_slug, p.post_img, c.cat_title, p.created_at')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0')
+            ->order_by('p.created_at', 'DESC')
+            ->limit(4)
+            ->get('posts p, categories c')
+            ->result();
+  }
+    public function get_post_cats()
+  {
+    return $this->db
+            ->select('p.id, p.post_title, p.post_slug, p.post_img, c.cat_title, p.created_at')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0')
+            ->order_by('p.created_at', 'ASC')
+            ->limit(4)
+            ->get('posts p, categories c')
+            ->result();
+  }
+  
+   public function get_post_catsi()
+  {
+    return $this->db
+            ->select('p.id, p.post_title, p.post_slug, p.post_img, c.cat_title, p.created_at')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0')
+            ->order_by('p.created_at', 'DESC')
+            ->limit(2)
             ->get('posts p, categories c')
             ->result();
   }
@@ -57,6 +91,19 @@ class M_public extends CI_Model
   {
     return $this->db
             ->insert('comments', $data);
+  }
+
+    public function commented()
+  {
+      
+    return $this->db
+            ->select('p.id, p.post_title, p.post_slug, p.post_img, c.cat_title, p.created_at, COUNT(comments.post_id) AS num_comments')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0 AND comments.post_id = p.id')
+            ->order_by('num_comments', 'DESC')
+            ->limit(4)
+            ->group_by('p.id')
+            ->get('posts p, categories c, comments')
+            ->result();
   }
 
   public function get_comments($id)
@@ -101,6 +148,7 @@ class M_public extends CI_Model
     return $this->db
     ->select('p.id, p.post_title, p.post_img, p.post_content, p.post_slug, c.cat_title, p.created_at')
     ->where('p.post_cat_id = c.id AND p.is_delete = 0 AND p.post_lvl = 2')
+    ->limit(1)
     ->get('posts p, categories c')
     ->result();
   }
@@ -111,7 +159,7 @@ class M_public extends CI_Model
     ->select('p.id, p.post_title, p.post_img, p.post_slug, c.cat_title, p.created_at')
     ->where('p.post_cat_id = c.id AND p.is_delete = 0')
     ->order_by('p.created_at', 'ASC')
-    ->limit(5)
+    ->limit(13)
     ->get('posts p, categories c')
     ->result();
   }

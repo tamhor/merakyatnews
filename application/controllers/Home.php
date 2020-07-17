@@ -25,6 +25,10 @@ class Home extends Public_Controller
 		$this->var['firsts'] = $this->public->get_1st_category();
 		$this->var['seconds'] = $this->public->get_2nd_category();
 		$this->var['thirds'] = $this->public->get_3rd_category();
+		$this->var['cats'] = $this->public->get_post_cat();
+		$this->var['related'] = $this->public->get_post_catsi();
+		$this->var['catz'] = $this->public->get_post_cats();
+		$this->var['commented'] = $this->public->commented();
 		$this->var['module'] = 'public/landing';
 
 		// print_r($this->var['populars']);die;
@@ -36,6 +40,7 @@ class Home extends Public_Controller
 		$id = (int) $this->uri->segment(3);
 
 		$this->var['cat_id'] = $this->public->get_category_id($id);
+		$this->var['commented'] = $this->public->commented();
 		$this->var['posts'] = $this->public->get_post_by_cat_id($id);
 		foreach ($this->var['cat_id'] as $title) {
 			$this->var['title'] = $title->cat_title;
@@ -62,6 +67,7 @@ class Home extends Public_Controller
 
 		$config['base_url'] = 'http://example.com/index.php/test/page/';
 		$config['total_rows'] = 200;
+		$this->var['commented'] = $this->public->commented();
 		$config['per_page'] = 20;
 
 		$this->var['action'] = site_url('home/post_comment');
@@ -90,6 +96,7 @@ class Home extends Public_Controller
 		$news_data = [];
 		$news_data['post_id'] = $this->input->post('post_id');
 		$news_data['username'] = $this->input->post('username');
+		$this->var['commented'] = $this->public->commented();
 		$news_data['comment'] = $this->input->post('comment');
 		$news_data['created_at'] = date('Y-m-d H:i:s');
 		$news_data['is_delete'] = 0;
@@ -112,6 +119,7 @@ class Home extends Public_Controller
 		$this->var['title'] = 'Search Result';
 		$this->var['posts'] = $this->public->get_all_posts();
 		$this->var['categories'] = $this->public->get_all_categories();
+		$this->var['commented'] = $this->public->commented();
 		$this->var['breaking_news'] = $this->public->get_post_breaking_news();
 		$this->var['sliders'] = $this->public->get_post_sliders();
 		$this->var['lasts'] = $this->public->get_post_lasts();

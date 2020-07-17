@@ -23,7 +23,7 @@
               <th scope="col" class="border-0">#</th>
               <th scope="col" class="border-0">Post Title</th>
               <th scope="col" class="border-0">Post Category</th>
-              <th scope="col" class="border-0">Created at</th>
+              <th scope="col" class="border-0"><?= $this->uri->segment(2) === 'users' ? 'Users' : 'Created at' ?></th>
               <th class="border-0" colspan="2">Action</th>
             </tr>
           </thead>
@@ -34,7 +34,7 @@
             		<td><?= $num ?></td>
             		<td><?= $news->post_title ?></td>
             		<td><?= $news->cat_title ?></td>
-            		<td><?= $news->created_at ?></td>
+            		<td><?= $this->uri->segment(2) === 'users' ? $news->full_name : $news->created_at ?></td>
             		<td>
             			<a href="<?= base_url('news/create/' . $news->id) ?>" class="btn btn-info btn-sm">
             				<i class="material-icons">edit</i> Edit

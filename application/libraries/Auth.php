@@ -22,6 +22,7 @@ class Auth
 		if ($query->num_rows() === 1) {
 			$data = $query->row();
 			if ($username == $data->username && password_verify($password, $data->password)) {
+// 			if ($username == $data->username && $password == $data->password) {
 				$session_data = [];
 				$session_data['logged_in'] = true;
 				$session_data['id'] = $data->id;
@@ -41,6 +42,7 @@ class Auth
 		if ($query->num_rows() === 1) {
 			$data = $query->row();
 			if ($username == $data->username && password_verify($password, $data->password)) {
+            // if ($username == $data->username && $password == $data->password) {
 				$session_data = [];
 				$session_data['logged_in'] = true;
 				$session_data['id'] = $data->id;

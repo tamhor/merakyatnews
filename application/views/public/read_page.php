@@ -48,7 +48,23 @@
         <?php } ?>
       </div>
       <div class="related_post">
-        <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
+        <h2>Related News <i class="fa fa-thumbs-o-up"></i></h2>
+        <ul class="spost_nav wow fadeInDown animated">
+          <?php 
+            foreach (array_slice($related, 0, 3) as $relate) {
+          ?>
+            <li>
+              <div class="media"> <a class="media-left" href="<?= base_url('home/read/'.$relate->id.'/'.$relate->post_slug) ?>"> <img src="<?= base_url('uploads/'.$relate->post_img) ?>" alt=""> </a>
+                <div class="media-body"> <a class="catg_title" href="<?= base_url('home/read/'.$relate->id.'/'.$relate->post_slug) ?>"><?= $relate->post_title ?></a> </div>
+              </div>
+            </li>
+          <?php
+            }
+          ?>
+        </ul>
+      </div>
+      <div class="related_post">
+        <h2>Another News <i class="fa fa-thumbs-o-up"></i></h2>
         <ul class="spost_nav wow fadeInDown animated">
           <?php 
             foreach (array_slice($related, 0, 3) as $relate) {

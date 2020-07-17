@@ -32,6 +32,24 @@ class M_admin extends CI_Model
             ->get('posts')
             ->num_rows();
   }
+  
+  public function get_post_numrowss($auth)
+  {
+    return $this->db
+            ->select('id')
+            ->where('is_delete = 0 AND user_id=', $auth)
+            ->get('posts')
+            ->num_rows();
+  }
+ 
+  
+  public function get_pending_numrows(){
+      return $this->db
+            ->select('p.id, p.post_title, c.cat_title, p.created_at')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0 AND p.is_public = 0')
+            ->get('posts p, categories c')
+            ->num_rows();
+  }
 
   public function get_category_numrows()
   {
@@ -56,6 +74,15 @@ class M_admin extends CI_Model
             ->select('p.id, p.post_title, c.cat_title, p.created_at')
             ->where('p.post_cat_id = c.id AND p.is_delete = 0')
             ->get('posts p, categories c')
+            ->result();
+  }
+  
+  public function get_user_posts()
+  {
+    return $this->db
+            ->select('p.id, p.post_title, c.cat_title, p.created_at, u.full_name')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0 AND p.user_id=u.id AND u.role=0')
+            ->get('posts p, categories c, users u')
             ->result();
   }
 
@@ -117,8 +144,9 @@ class M_admin extends CI_Model
 
   public function insert_new_post($data)
   {
-    return $this->db
+    $this->db
             ->insert('posts', $data);
+            return $this->db->insert_id();
   }
 
   public function update_post($data, $id)

@@ -15,9 +15,74 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/css/jquery.fancybox.css" >
 <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/css/theme.css" >
 <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/css/style.css" >
+<link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/css/spag.css" >
 <style>
-img{
+img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
   border-radius: 3%;
+}
+.sidebar {
+  height: 100%; 
+  width: 0; 
+  position: fixed; 
+  z-index: 1; 
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  overflow-x: hidden;
+  padding-top: 60px; 
+  transition: 0.5s;
+}
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.sidebar a:hover {
+  color: #111;
+}
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+.navbar-default{
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+.custom{
+    border: 2px solid #20409a !important;
+    padding: 8px 15px !important;
+    margin-top: 11px;
+    height: 38px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #20409a !important;
+    border-radius: 29px;
+    margin-left: 10px !important;
+}
+.openbtn:hover {
+  background-color: #444;
+}
+#main {
+  transition: margin-left .5s; 
+  padding: 20px;
+}
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
 }
 </style>
 
@@ -40,15 +105,21 @@ img{
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav_top" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"><i class="fa fa-bars"></i> Menu</a>
+      <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav_top" aria-expanded="false">-->
+      <!--  <span class="sr-only">Toggle navigation</span>-->
+      <!--  <span class="icon-bar"></span>-->
+      <!--  <span class="icon-bar"></span>-->
+      <!--  <span class="icon-bar"></span>-->
+      <!--</button>-->
+      <button class="navbar-toggle collapsed custom" onclick="location.href='<?= base_url('user_login') ?>';">Login</button>
+      <a class="navbar-brand" onclick="openNav()" href="#"><i class="fa fa-bars"></i> Menu</a>
     </div>
-
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <?php foreach ($categories as $category) { ?>
+  <a href="<?= base_url('home/category_page/'.$category->id.'/'.$category->cat_slug) ?>" active><?= $category->cat_title ?></a>
+<?php } ?>
+</div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="nav_top">
       <ul class="nav navbar-nav">
@@ -71,7 +142,7 @@ img{
           </ul>
         </li> -->
         <li>
-          <a class="navbar-brand" href="<?= base_url('user_login') ?>">Login</a>
+          <a class="navbar-brand custom" href="<?= base_url('user_login') ?>">Login</a>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -92,7 +163,7 @@ img{
   </header>
   <div class="container">
   <section id="navArea">
-    <nav class="navbar navbar-inverse" style="border-radius: 10px; background-color:#1b387b;" role="navigation">
+    <nav class="navbar navbar-inverse" style="border-radius: 10px; background:linear-gradient(to right, #20409a 50%, #007cbd 100%);" role="navigation">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       </div>
@@ -160,6 +231,23 @@ img{
               ?>
             </ul>
           </div> -->
+          <div class="single_sidebar">
+            <h2><span>Most Commented</span></h2>
+            <ul class="spost_nav">
+            <?php
+              foreach ($commented as $popular) {
+            ?>
+              <li>
+                <div class="media wow fadeInDown"> <a href="<?= base_url('home/read/'.$popular->id.'/'.$popular->post_slug) ?>" class="media-left"> <img alt="" src="<?= base_url('uploads/'.$popular->post_img) ?>"> </a>
+                  <div class="media-body"> <a href="<?= base_url('home/read/'.$popular->id.'/'.$popular->post_slug) ?>" class="catg_title"> <?= $popular->post_title ?></a> </div>
+                </div>
+              </li>
+              <?php
+              }
+              ?>
+            </ul>
+          </div>
+          <div class="single_sidebar wow fadeInDown">
           <div class="single_sidebar wow fadeInDown">
             <a class="sideAdd" target="_blank" href="http://tamhor.com"><img src="<?= base_url('assets/images/adsbannersquare.png') ?>" alt=""></a>
             <a class="sideAdd" target="_blank" href="http://tamhor.com"><img src="<?= base_url('assets/images/adsbannersquare.png') ?>" alt=""></a>
@@ -230,9 +318,43 @@ img{
 <script src="<?= base_url('assets/js/wow.min.js') ?>"></script> 
 <script src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script> 
 <script src="<?= base_url('assets/js/slick.min.js') ?>"></script> 
+<script src="<?= base_url('assets/js/jpag.js') ?>"></script> 
 <script src="<?= base_url('assets/js/jquery.li-scroller.1.0.js') ?>"></script> 
 <script src="<?= base_url('assets/js/jquery.newsTicker.min.js') ?>"></script> 
 <script src="<?= base_url('assets/js/jquery.fancybox.pack.js') ?>"></script> 
+<script>
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    } 
+    jQuery(function($) {
+        var items = $("#content tbody tr");
+
+        var numItems = items.length;
+        var perPage = 5;
+
+        items.slice(perPage).hide();
+
+        $("#pagination").pagination({
+            items: numItems,
+            itemsOnPage: perPage,
+            cssStyle: "light-theme",
+
+            onPageClick: function(pageNumber) {
+                var showFrom = perPage * (pageNumber - 1);
+                var showTo = showFrom + perPage;
+
+                items.hide()
+                     .slice(showFrom, showTo).show();
+            }
+        });
+    });
+</script>
 <script src="<?= base_url('assets/js/custom.js') ?>"></script>
 
 </body>

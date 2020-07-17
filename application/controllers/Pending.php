@@ -12,8 +12,9 @@ class Pending extends Admin_Controller
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('session');
 		if (!$this->auth->is_logged_in_admin()) {
-			redirect('login');
-		}
+				if(!$this->auth->is_logged_in_user())
+				    redirect('login');
+			}
 	}
 
 	public function index()
@@ -21,7 +22,7 @@ class Pending extends Admin_Controller
 		$auth = $this->session->userdata('id');
 		// var_dump($auth);die;
 		$this->var['title'] = 'Pending Posts';
-		if($auth == 1){
+		if($this->auth->is_logged_in_admin()){
 			$this->var['query'] = $this->admin->get_pending_posts();
 		}else{
 			$this->var['query'] = $this->db
@@ -41,6 +42,7 @@ class Pending extends Admin_Controller
 		$news_data['is_public'] = $this->input->post('is_public');
 
 		$this->var['title'] = 'Show Post';
+		$this->var['id'] = $id;
 		$this->var['module'] = 'admin/show_post';
 		// $this->var['message'] = NULL;
 		$this->var['query'] = $id && $id > 0 && ctype_digit((string) $id) ? 

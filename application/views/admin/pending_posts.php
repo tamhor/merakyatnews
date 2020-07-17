@@ -39,6 +39,9 @@
             			<a href="<?= base_url('pending/show/' . $news->id) ?>" class="btn btn-info btn-sm">
             				<i class="material-icons">visibility</i> View
             			</a>
+                  <a href="<?= base_url('news/create/' . $news->id) ?>" class="btn btn-warning btn-sm">
+                    <i class="material-icons">edit</i> Edit
+                  </a>
             		</td>
             		<td>
             			<form action="<?= base_url('pending/delete') ?>" method="post">

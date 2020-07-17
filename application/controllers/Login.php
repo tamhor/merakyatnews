@@ -23,7 +23,7 @@ class Login extends Admin_Controller
     if ($this->form_validate()) {
       $username = $this->input->post('username');
       $password = $this->input->post('password');
-      if ($this->auth->logged_in_admin($username, $password)) {
+      if ($this->auth->logged_in_admin($username, $password) || $this->auth->logged_in_user($username, $password)) {
         $data['type'] = 'success';
         redirect('dashboard');
       }

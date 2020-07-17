@@ -1,17 +1,54 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
 <section id="sliderSection">
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-8">
-        <div class="slick_slider">
+        <!--<div class="slick_slider" style="background: linear-gradient(100deg, #21409a 50%, #007cbd 100%);border-radius: 8px;margin-bottom: 24px;">-->
+        <!--    <?php foreach ($sliders as $slider) { ?>-->
+        <!--    <div class="single_iteam"> <a href="<?= base_url('home/read/'.$slider->id.'/'.$slider->post_slug) ?>"> <img src="<?= base_url('uploads/'.$slider->post_img) ?>" alt=""></a>-->
+        <!--        <div class="slider_article">-->
+        <!--            <h2><a class="slider_tittle" href=""><?= $slider->post_title ?></a></h2>-->
+        <!--            <p><?= character_limiter($slider->post_content, 150) ?></p>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--    <?php } ?>-->
+        <!--</div>-->
+        <div class="headline">
             <?php foreach ($sliders as $slider) { ?>
-            <div class="single_iteam"> <a href="<?= base_url('home/read/'.$slider->id.'/'.$slider->post_slug) ?>"> <img src="<?= base_url('uploads/'.$slider->post_img) ?>" alt=""></a>
-                <div class="slider_article">
-                    <h2><a class="slider_tittle" href="<?= base_url('home/read/'.$slider->id.'/'.$slider->post_slug) ?>"><?= $slider->post_title ?></a></h2>
-                    <p><?= character_limiter($slider->post_content, 150) ?></p>
+            <article class="media media--text-overlay block-link">
+                <div class="media__image">
+                    
+                                
+                    <a onclick="_pt(this, &quot;headline&quot;, &quot;Babak I: Man City Memimpin 2-0 atas Bournemouth&quot;, &quot;artikel&quot;)" href="<?= base_url('home/read/'.$slider->id.'/'.$slider->post_slug) ?>" class="media__link">
+                        <span class="ratiobox ratiobox--16-9 lqd" style="background-image: url(<?= base_url('uploads/'.$slider->post_img) ?>);">
+                             <img src="<?= base_url('uploads/'.$slider->post_img) ?>" alt="Babak I: Man City Memimpin 2-0 atas Bournemouth" title="Babak I: Man City Memimpin 2-0 atas Bournemouth" class="" style="display: none;">                </span>
+                    </a>
                 </div>
-            </div>
+                <div class="media__text">
+                    
+                                
+                    <h2 class="media__title" style="margin-bottom:2px;">
+                        <a onclick="_pt(this, &quot;headline&quot;, &quot;Babak I: Man City Memimpin 2-0 atas Bournemouth&quot;, &quot;artikel&quot;)" href="<?= base_url('home/read/'.$slider->id.'/'.$slider->post_slug) ?>" class="media__link">
+                            <?= $slider->post_title ?>                </a>
+                    </h2>
+                    <div class="media__date mgt-4"><?= character_limiter($slider->post_content, 150) ?></span></div>
+                </div>
+            </article>
             <?php } ?>
+                    <div class="headline-terkait">
+                    <div class="headline-terkait__title">Berita Terkait</div>
+                    <div class="list-content list-content--column grid-row">
+                        <?php foreach ($related as $zii) { ?>
+                                            <article class="list-content__item column">
+                                <h3 class="list-content__title">
+                                    <a onclick="_pt(this, <?= $zii->post_title ?>)" href="<?= base_url('home/read/'.$zii->id.'/'.$zii->post_slug) ?>"><?= $zii->post_title ?></a>
+                                </h3>
+                            </article>
+                                     
+                            </article>
+                                        <?php } ?>
+                    </div>
+                </div>
+                
         </div>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
@@ -22,21 +59,22 @@
       </div>
     </div>
   </section>
+
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="latest_post">
           <h2><span>Latest post</span></h2>
-          <div class="latest_post_container">
-            <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
-            <ul class="latest_postnav">
-            <?php foreach ($lasts as $last) { ?>
-              <li>
-                <div class="media"> <a href="<?= base_url('home/read/'.$last->id.'/'.$last->post_slug) ?>" class="media-left"> <img alt="" src="<?= base_url('uploads/'.$last->post_img) ?>"> </a>
-                  <div class="media-body"> <a href="<?= base_url('home/read/'.$last->id.'/'.$last->post_slug) ?>" class="catg_title"><?= $last->post_title ?></a> </div>
-                </div>
-              </li>
-            <?php } ?>
-            </ul>
-            <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
+          <div class="latest_post_container" style="margin-bottom:40px;">
+            <table id="content" >
+                <tbody>
+                    <?php foreach ($lasts as $last) { ?>
+                    <tr style="height:85px;">
+                        <td style="margin-top:15px;"><a href="<?= base_url('home/read/'.$last->id.'/'.$last->post_slug) ?>" class="media-left"> <img alt="" src="<?= base_url('uploads/'.$last->post_img) ?>"> </a></td>
+                        <td><a href="<?= base_url('home/read/'.$last->id.'/'.$last->post_slug) ?>" class="catg_title"><?= $last->post_title ?></a></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <div id="pagination"></div>
           </div>
         </div>
         <div class="left_content">

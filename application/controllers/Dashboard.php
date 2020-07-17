@@ -13,15 +13,18 @@
 			$this->load->model('m_admin', 'admin');
 			$this->load->library('auth');
 			if (!$this->auth->is_logged_in_admin()) {
-				redirect('login');
+				if(!$this->auth->is_logged_in_user())
+				    redirect('login');
 			}
 		}
 
 		public function index()
 		{
+		    $auth = $this->session->userdata('id');
 			$this->var['title'] = 'News Dashboard';
 			$this->var['module'] = 'admin/home';
-			$this->var['post_numrows'] = $this->admin->get_post_numrows();
+			$this->var['post_numrows'] = ($this->auth->is_logged_in_admin()) ? $this->admin->get_post_numrows()  : $this->admin->get_post_numrowss($auth);
+			$this->var['pending_numrows'] = $this->admin->get_pending_numrows();
 			$this->var['category_numrows'] = $this->admin->get_category_numrows();
 			$this->var['user_numrows'] = $this->admin->get_user_numrows();
 			$this->load->view('admin/index', $this->var);

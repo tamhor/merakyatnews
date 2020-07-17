@@ -1,0 +1,7 @@
+[12-Jul-2020 23:09:51 Asia/Jakarta] PHP Parse error:  syntax error, unexpected ':', expecting '{' in /home/karyanto/rentalin.karyanto.com/vendor/symfony/polyfill-php80/bootstrap.php on line 23
+[12-Jul-2020 23:09:51 Asia/Jakarta] PHP Parse error:  syntax error, unexpected ':', expecting '{' in /home/karyanto/rentalin.karyanto.com/vendor/symfony/polyfill-php80/bootstrap.php on line 23
+[12-Jul-2020 23:09:52 Asia/Jakarta] PHP Parse error:  syntax error, unexpected ':', expecting '{' in /home/karyanto/rentalin.karyanto.com/vendor/symfony/polyfill-php80/bootstrap.php on line 23
+[12-Jul-2020 23:09:53 Asia/Jakarta] PHP Parse error:  syntax error, unexpected ':', expecting '{' in /home/karyanto/rentalin.karyanto.com/vendor/symfony/polyfill-php80/bootstrap.php on line 23
+[15-Jul-2020 03:48:23 Asia/Jakarta] PHP Fatal error:  Cannot redeclare M_admin::get_post_numrows() in /home/karyanto/rentalin.karyanto.com/application/models/M_admin.php on line 36
+[15-Jul-2020 03:48:36 Asia/Jakarta] PHP Fatal error:  Cannot redeclare M_admin::get_post_numrows() in /home/karyanto/rentalin.karyanto.com/application/models/M_admin.php on line 45
+[15-Jul-2020 03:48:38 Asia/Jakarta] PHP Fatal error:  Cannot redeclare M_admin::get_post_numrows() in /home/karyanto/rentalin.karyanto.com/application/models/M_admin.php on line 45

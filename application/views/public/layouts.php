@@ -105,13 +105,8 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav_top" aria-expanded="false">-->
-      <!--  <span class="sr-only">Toggle navigation</span>-->
-      <!--  <span class="icon-bar"></span>-->
-      <!--  <span class="icon-bar"></span>-->
-      <!--  <span class="icon-bar"></span>-->
-      <!--</button>-->
       <button class="navbar-toggle collapsed custom" onclick="location.href='<?= base_url('user_login') ?>';">Login</button>
+      <a class="navbar-toggle collapsed" style="border: 0;" href="#"><i class="fa fa-2x fa-youtube-play"></i></a>
       <a class="navbar-brand" onclick="openNav()" href="#"><i class="fa fa-bars"></i> Menu</a>
     </div>
 <div id="mySidebar" class="sidebar">
@@ -154,7 +149,8 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="header_bottom">
-          <div class="logo_area"><a href="<?= base_url() ?>" class="logo"><img src="<?= base_url('assets/images/logo.png') ?>" alt=""></a></div>
+          <div class="logo_area"><a href="<?= base_url() ?>" class="logo"><img src="<?= base_url('assets/images/logo.png') ?>" alt=""></a>
+          </div>
           <div class="add_banner"><a target="_blank" href="http://tamhor.com"><img src="<?= base_url('assets/images/adsbanner728x90.png') ?>" alt=""></a></div>
         </div>
       </div>

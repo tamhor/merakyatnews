@@ -165,9 +165,9 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav main_nav" style="padding:0 20px;">
-          <li class="active"><a href="<?= base_url() ?>"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+          <li class="<?= $this->uri->segment(1) === NULL ? 'active' : '' ?>"><a href="<?= base_url() ?>"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
             <?php foreach ($categories as $category) { ?>
-              <li><a href="<?= base_url('home/category_page/'.$category->id.'/'.$category->cat_slug) ?>" active><?= $category->cat_title ?></a></li>
+              <li class="<?= $this->uri->segment(3) === $category->id ? 'active' : '' ?>"><a href="<?= base_url().'home/category_page/'.$category->id.'/'.$category->cat_slug ?>" ><?= $category->cat_title ?></a></li>
             <?php } ?>
         </ul>
       </div>

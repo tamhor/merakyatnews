@@ -91,7 +91,7 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
 <div id="preloader">
   <div id="status">&nbsp;</div>
 </div>
-<a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+<a class="scrollToTop" href="#" style="right: 30px;"><i class="fa fa-angle-up"></i></a>
 <div class="navbar navbar-default">
   <div class="container">
     <ul class="nav navbar-nav">
@@ -105,7 +105,27 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button class="navbar-toggle collapsed custom" onclick="location.href='<?= base_url('user_login') ?>';">Login</button>
+      <?php if ($this->session->userdata('logged_in')) { ?>
+        <button class="navbar-toggle dropdown collapsed">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="d-none d-md-inline-block"><?= $this->session->userdata('full_name') ?></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+            <a href="<?php
+            if($this->auth->is_logged_in_admin()) {
+              echo base_url('logout/admin');
+            }else{
+              echo base_url('logout/user');
+            }
+            ?>">
+              Logout </a>
+              </li>
+          </ul>
+        </button>
+      <?php }else{ ?>
+          <button class="navbar-toggle collapsed custom" onclick="location.href='<?= base_url('user_login') ?>';">Login</button>
+      <?php } ?>
       <a class="navbar-toggle collapsed" style="border: 0;" href="#"><i class="fa fa-2x fa-youtube-play"></i></a>
       <a class="navbar-brand" onclick="openNav()" href="#"><i class="fa fa-bars"></i> Menu</a>
     </div>
@@ -113,6 +133,11 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <?php foreach ($categories as $category) { ?>
   <a href="<?= base_url('home/category_page/'.$category->id.'/'.$category->cat_slug) ?>" active><?= $category->cat_title ?></a>
+  <?php foreach ($subs as $key): ?>
+    <?php if ($category->id == $key->cat_id): ?>
+      <a href="<?= base_url($key->sub_slug) ?>" style="margin-left: 10px;"><i class="fa fa-chevron-right"></i> <?php echo $key->sub_title ?></a>
+    <?php endif ?>
+  <?php endforeach ?>
 <?php } ?>
 </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -129,16 +154,29 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><i class="fa fa-2x fa-youtube-play"></i></a></li>
-        <!-- <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="<?= base_url('user_login') ?>">Login</a></li>
-            <li><a href="#">Register</a></li>
-          </ul>
-        </li> -->
-        <li>
-          <a class="navbar-brand custom" href="<?= base_url('user_login') ?>">Login</a>
-        </li>
+          <?php if ($this->session->userdata('logged_in')) { ?>
+            <li class="dropdown">
+             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+               <span class="d-none d-md-inline-block"><?= $this->session->userdata('full_name') ?></span>
+             </a>
+             <ul class="dropdown-menu">
+               <li>
+               <a href="<?php
+               if($this->auth->is_logged_in_admin()) {
+                 echo base_url('logout/admin');
+               }else{
+                 echo base_url('logout/user');
+               }
+               ?>">
+                 Logout </a>
+                 </li>
+             </ul>
+           </li>
+          <?php }else{ ?>
+            <li>
+              <a class="navbar-brand custom" href="<?= base_url('login') ?>">Login</a>
+            </li>
+          <?php } ?>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -167,7 +205,21 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
         <ul class="nav navbar-nav main_nav" style="padding:0 20px;">
           <li class="<?= $this->uri->segment(1) === NULL ? 'active' : '' ?>"><a href="<?= base_url() ?>"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
             <?php foreach ($categories as $category) { ?>
-              <li class="<?= $this->uri->segment(3) === $category->id ? 'active' : '' ?>"><a href="<?= base_url().'home/category_page/'.$category->id.'/'.$category->cat_slug ?>" ><?= $category->cat_title ?></a></li>
+              <li class="<?= $this->uri->segment(3) === $category->id ? 'active' : '' ?> dropdown"><a href="<?= base_url().'home/category_page/'.$category->id.'/'.$category->cat_slug ?>" ><?= $category->cat_title ?></a>
+                <?php $check = 0; ?>
+                <?php foreach ($subs as $key): ?>
+                  <?php if ($category->id == $key->cat_id): ?>
+                    <?php if ($check == 0): ?>
+                      <ul class="dropdown-menu">
+                    <?php endif ?>
+                    <li><a href="<?= base_url($key->sub_slug) ?>"><?php echo $key->sub_title ?></a></li>
+                    <?php $check++; ?>
+                  <?php endif ?>
+                <?php endforeach ?>
+                <?php if ($check > 0): ?>
+                  </ul>
+                <?php endif ?>
+              </li>
             <?php } ?>
         </ul>
       </div>
@@ -352,6 +404,17 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
     });
 </script>
 <script src="<?= base_url('assets/js/custom.js') ?>"></script>
+
+<script>
+	$(document).ready(function () {
+		$('.update_comment').click(function () {
+			$('input[name=update_username]').val($(this).attr('data-username'));
+			$('textarea[name=update_comment]').val($(this).attr('data-comment'));
+			$('input[name=comment_id]').val($(this).attr('data-id'));
+			$('#update_comment').modal('show');
+		})
+	})
+</script>
 
 </body>
 </html>

@@ -12,7 +12,7 @@
         <a href="<?= base_url('home/category_page/'.$posts->post_cat_id) ?>"><i class="fa fa-tags"></i><?= $posts->cat_title ?></a>
       </div>
       <div class="single_page_content">
-        <img class="img-center" src="<?= base_url('uploads/'.$posts->post_img) ?>" alt="">
+        <img class="img-center" src="<?= base_url('uploads/'.$posts->post_img) ?>" alt="" style="height: 100%;">
         <p><?= $posts->post_content ?></p>
       </div>
       <div class="social_link">
@@ -43,9 +43,15 @@
           <div class="post_commentbox">
           <a href="#"><i class="fa fa-user"></i><?= $comment->username ?></a>
           <span><i class="fa fa-calendar"></i><?= $comment->created_at ?></span>
+          <?php if($this->auth->is_logged_in_admin()) { ?>
+          <a style="cursor: pointer;" class="update_comment" data-id="<?= $comment->id ?>" data-username="<?= $comment->username ?>" data-comment="<?= $comment->comment ?>">
+          <i class="fa fa-pencil"></i>Edit
+          </a>
+          <a href="<?= base_url('home/delete_comment/'. $comment->id) ?>" onclick="return confirm('Are you sure to delete this comment?');"><i class="fa fa-close"></i>Delete</a>
+          <?php } ?>
           <p><?= $comment->comment ?></p>
           </div>
-        <?php } ?>
+          <?php } ?>
       </div>
       <div class="related_post">
         <h2>Related News <i class="fa fa-thumbs-o-up"></i></h2>
@@ -79,6 +85,31 @@
           ?>
         </ul>
       </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="update_comment" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="comment_update" action="<?= base_url('home/edit_comment') ?>" method="post">
+        <div class="modal-body">
+            <label for="">Username</label>
+            <input type="text" class="form-control" name="update_username" readonly>
+            <label for="">Comment</label>
+            <textarea class="form-control" name="update_comment" rows="3" cols=""></textarea>
+          <input type="hidden" name="comment_id">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit">Edit</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

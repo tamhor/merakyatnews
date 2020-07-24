@@ -69,7 +69,7 @@
                     <?php foreach ($lasts as $last) { ?>
                     <tr style="height:85px;">
                         <td style="margin-top:15px;"><a href="<?= base_url('home/read/'.$last->id.'/'.$last->post_slug) ?>" class="media-left"> <img alt="" src="<?= base_url('uploads/'.$last->post_img) ?>"> </a></td>
-                        <td><a href="<?= base_url('home/read/'.$last->id.'/'.$last->post_slug) ?>" class="catg_title"><?= $last->post_title ?></a></td>
+                        <td><a href="<?= base_url('home/read/'.$last->id.'/'.$last->post_slug) ?>" class="catg_title"><?= $last->post_title ?></a><br><?= $last->created_at ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>

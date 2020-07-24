@@ -120,7 +120,13 @@
                     <span class="d-none d-md-inline-block"><?= $this->session->userdata('full_name') ?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small px-0">
-                    <a class="dropdown-item text-danger" href="<?= base_url('logout/admin') ?>">
+                    <a class="dropdown-item text-danger" href="<?php
+                    if($this->auth->is_logged_in_admin()) {
+                      echo base_url('logout/admin');
+                    }else{
+                      echo base_url('logout/user');
+                    }
+                    ?>">
                       <i class="material-icons text-danger">&#xE879;</i> Logout </a>
                   </div>
                 </li>

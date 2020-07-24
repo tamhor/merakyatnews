@@ -93,6 +93,20 @@ class M_public extends CI_Model
             ->insert('comments', $data);
   }
 
+  public function update_comment($data, $id)
+  {
+    return $this->db
+            ->where('id', $id)
+            ->update('comments', $data);
+  }
+
+   public function delete_comment($id)
+  {
+    return $this->db
+            ->where('id', $id)
+            ->update('comments', array('is_delete' => 1));
+  }
+
     public function commented()
   {
       
@@ -124,6 +138,14 @@ class M_public extends CI_Model
             ->result();
   }
 
+  public function get_all_subs()
+  {
+    $where = array(
+      'is_delete' => 0
+    );
+    return $this->db->get_where('subs', $where)->result();
+  }
+
   public function get_category_id($cat_id)
   {
     return $this->db
@@ -149,6 +171,7 @@ class M_public extends CI_Model
     ->select('p.id, p.post_title, p.post_img, p.post_content, p.post_slug, c.cat_title, p.created_at')
     ->where('p.post_cat_id = c.id AND p.is_delete = 0 AND p.post_lvl = 2')
     ->limit(1)
+    ->order_by('id', 'DESC')
     ->get('posts p, categories c')
     ->result();
   }
@@ -158,7 +181,7 @@ class M_public extends CI_Model
     return $this->db
     ->select('p.id, p.post_title, p.post_img, p.post_slug, c.cat_title, p.created_at')
     ->where('p.post_cat_id = c.id AND p.is_delete = 0')
-    ->order_by('p.created_at', 'ASC')
+    ->order_by('p.created_at', 'DESC')
     ->limit(13)
     ->get('posts p, categories c')
     ->result();
@@ -202,6 +225,7 @@ class M_public extends CI_Model
     return $this->db
           ->select('*')
           ->from('posts')
+          ->where('is_delete', '0')
           ->like('post_title', $keyword)
           ->or_like('post_content', $keyword)
           ->get()->result();

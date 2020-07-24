@@ -10,7 +10,10 @@ class Home extends Public_Controller
 		parent::__construct();
 		$this->load->model('m_public', 'public');
 		$this->load->helper('text');
+		$this->load->helper('date');
+		$this->load->library('auth');
 		$this->load->helper('form');
+		$this->var['subs'] = $this->public->get_all_subs();
 	}
 
 	public function index()
@@ -114,6 +117,34 @@ class Home extends Public_Controller
 
 	}
 
+	public function edit_comment()
+	{
+		$id = $this->input->post('comment_id');
+		$data['username'] = $this->input->post('update_username');
+		$data['comment'] = $this->input->post('update_comment');
+
+		$this->public->update_comment($data, $id);
+		// if($update){
+		// 	$data['message'] = 'Comment berhasil dirubah';
+		// 	$data['type'] = 'success';
+		// }
+		// else {
+		// 	$data['message'] = "Comment gagal dirubah";
+		// 	$data['type'] = 'error';
+		// }
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function delete_comment()
+	{
+		$id = $this->uri->segment(3);
+		if ($id && $id > 0) {
+			$this->public->delete_comment($id);
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function search()
 	{
 		$this->var['title'] = 'Search Result';
@@ -124,7 +155,7 @@ class Home extends Public_Controller
 		$this->var['sliders'] = $this->public->get_post_sliders();
 		$this->var['lasts'] = $this->public->get_post_lasts();
 		$this->var['populars'] = $this->public->get_post_populars();
-		$this->var['search']=$this->public->get_search($this->input->post('search'));
+		$this->var['search']=$this->public->get_search($this->input->get('search'));
 		if ($this->var['search']) {
 			$this->var['module'] = 'public/search';
 		}else {

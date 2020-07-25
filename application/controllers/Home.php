@@ -61,6 +61,30 @@ class Home extends Public_Controller
 		// var_dump($this->var['posts']);die;
 		$this->load->view('public/layouts', $this->var);
 	}
+
+	public function subs_page()
+	{
+		$id = (int) $this->uri->segment(4);
+
+		$this->var['cat_id'] = $this->public->get_category_id($id);
+		$this->var['commented'] = $this->public->commented();
+		$this->var['posts'] = $this->public->get_post_by_sub_id($id);
+		foreach ($this->var['cat_id'] as $title) {
+			$this->var['title'] = $title->cat_title;
+		}
+		$this->var['categories'] = $this->public->get_all_categories();
+		$this->var['breaking_news'] = $this->public->get_post_breaking_news();
+		$this->var['lasts'] = $this->public->get_post_lasts();
+		if ($this->var['posts']) {
+			$this->var['module'] = 'public/subs_category';
+		}else {
+			$this->var['module'] = 'public/404';
+		}
+		$this->var['populars'] = $this->public->get_post_populars();
+
+		// var_dump($this->var['posts']);die;
+		$this->load->view('public/layouts', $this->var);
+	}
 	
 	public function read()
 	{

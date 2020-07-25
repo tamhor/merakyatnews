@@ -151,5 +151,29 @@
         </main>
       </div>
     </div>
+    <script>
+      $(document).ready(function(){
+          $("#cat_id").change(function(){ 
+              $("#subs").hide();
+              $.ajax({
+                  type: "POST",
+                  url: "<?= base_url("/news/get_subs");?>",
+                  data: {post_cat_id : $("#cat_id").val()},
+                  dataType: "json",
+                  beforeSend: function(e) {
+                      if(e && e.overrideMimeType) {
+                              e.overrideMimeType("application/json;charset=UTF-8");
+                      }
+                  },
+                  success: function(response){ 
+                      $("#subs").html(response.list_subs).show();
+                  },
+                  error: function (xhr, ajaxOptions, thrownError) {
+                      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                  }
+              });
+          });
+      });
+    </script>
   </body>
 </html>

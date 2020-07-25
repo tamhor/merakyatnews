@@ -199,6 +199,13 @@ class M_admin extends CI_Model
             ->update('categories', array('is_delete' => 1));
   }
 
+  public function get_add_subs($cat_id)
+  {
+    $this->db->where('cat_id', $cat_id);
+    $result = $this->db->get('subs')->result();
+    return $result;
+  }
+
   public function insert_new_sub($data)
   {
     return $this->db
@@ -212,7 +219,7 @@ class M_admin extends CI_Model
             ->update('subs', $data);
   }
 
-   public function delete_sub($id)
+  public function delete_sub($id)
   {
     return $this->db
             ->where('id', $id)

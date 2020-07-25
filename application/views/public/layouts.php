@@ -135,7 +135,7 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
   <a href="<?= base_url('home/category_page/'.$category->id.'/'.$category->cat_slug) ?>" active><?= $category->cat_title ?></a>
   <?php foreach ($subs as $key): ?>
     <?php if ($category->id == $key->cat_id): ?>
-      <a href="<?= base_url($key->sub_slug) ?>" style="margin-left: 10px;"><i class="fa fa-chevron-right"></i> <?php echo $key->sub_title ?></a>
+      <a href="<?= base_url('home/subs_page/'.$key->cat_id.'/'.$key->id) ?>" style="margin-left: 10px;"><i class="fa fa-chevron-right"></i> <?php echo $key->sub_title ?></a>
     <?php endif ?>
   <?php endforeach ?>
 <?php } ?>
@@ -212,7 +212,7 @@ img{linear-gradient(to right, #20409a 50%, #007cbd 100%);
                     <?php if ($check == 0): ?>
                       <ul class="dropdown-menu">
                     <?php endif ?>
-                    <li><a href="<?= base_url($key->sub_slug) ?>"><?php echo $key->sub_title ?></a></li>
+                    <li><a href="<?= base_url('home/subs_page/'.$key->cat_id.'/'.$key->id.'/'.$key->sub_slug) ?>"><?php echo $key->sub_title ?></a></li>
                     <?php $check++; ?>
                   <?php endif ?>
                 <?php endforeach ?>

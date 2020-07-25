@@ -91,18 +91,32 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item px-3 pb-2">
             	<?php if ($categories AND $categories !== NULL): ?>
-            		<?php foreach ($categories as $cat): ?>
-            			<div class="custom-control custom-radio mb-1">
-  		              <input type="radio" name="post_cat_id" class="custom-control-input" id="<?= $cat->id ?>" value="<?= $cat->id ?>" <?= $query ? ($query->post_cat_id == $cat->id ? 'checked' : '') : ''; ?>>
-  		              <label class="custom-control-label" for="<?= $cat->id ?>"><?= $cat->cat_title ?></label>
-  		            </div>
-            		<?php endforeach ?>
-            		<?php else: ?>
+                  <select id="cat_id" class="custom-select" name="post_cat_id">
+                      <option value="">-PILIH-</option>
+                        <?php foreach ($categories as $cat): ?>
+                          <option value="<?= $cat->id ?>" <?= $query ? ($query->post_cat_id == $cat->id ? 'selected' : '') : ''; ?>><?= $cat->cat_title ?></option>
+                        <?php endforeach ?>
+                  </select>
+                  <?php else: ?>
             			<div class="text-center">
             				<span class="d-block">Categories not found.</span>
             				<a class="btn btn-warning my-3 text-white">Create category</a>
             			</div>
             	<?php endif ?>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class='card card-small mb-3'>
+        <div class="card-header border-bottom">
+          <h6 class="m-0">Sub Category</h6>
+        </div>
+        <div class='card-body p-0'>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item px-3 pb-2">
+              <select class="custom-select" id="subs" name="post_sub_id">
+                <option value="">-PILIH-</option>
+              </select>
             </li>
           </ul>
         </div>
@@ -123,5 +137,4 @@
     let content = '<?= html_entity_decode($query->post_content); ?>';
     $('.ql-editor').html(content);
   });
-  
-  </script>
+</script>

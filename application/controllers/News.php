@@ -65,6 +65,18 @@ class News extends Admin_Controller
 		$this->load->view('admin/index', $this->var);
 	}
 
+	public function get_subs()
+	{
+		$id = $this->input->post('post_cat_id');
+		$data = $this->admin->get_add_subs($id);
+		$lists = "<option value=''>--Please-Select---</option>";
+		foreach($data as $row){
+            $lists .= "<option value='".$row->id."'>".$row->sub_title."</option>";
+        }
+        $callback = array('list_subs'=>$lists); 
+        echo json_encode($callback);
+	}
+
 	
 	public function delete()
 	{
@@ -105,6 +117,7 @@ class News extends Admin_Controller
 				$news_data['post_title'] = $this->input->post('post_title');
 				$news_data['post_content'] = $this->input->post('post_content');
 				$news_data['post_cat_id'] = $this->input->post('post_cat_id');
+				$news_data['post_sub_id'] = $this->input->post('post_sub_id');
 				$news_data['post_slug'] = url_title(strtolower($this->input->post('post_title')), '-');
 				$news_data['post_img'] = $image['file_name'];
 				$news_data['post_lvl'] = $this->input->post('post_lvl');

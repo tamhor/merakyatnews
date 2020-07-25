@@ -87,6 +87,16 @@ class M_public extends CI_Model
             ->result();
   }
 
+  public function get_post_by_sub_id($sub_id)
+  {
+    return $this->db
+            ->select('p.id, p.post_title, p.post_slug, p.post_content, p.post_img, c.cat_title, p.created_at')
+            ->where('p.post_cat_id = c.id AND p.is_delete = 0 AND p.post_sub_id ='.$sub_id)
+            ->order_by('p.created_at', 'ASC')
+            ->get('posts p, categories c')
+            ->result();
+  }
+
   public function insert_comment($data)
   {
     return $this->db
